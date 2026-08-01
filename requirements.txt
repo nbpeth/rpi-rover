@@ -1,0 +1,13 @@
+asyncio==4.0.0
+colorzero==2.0
+gpiozero==2.0.1.post3
+pynput==1.8.2
+pyobjc-core==12.2.1
+pyobjc-framework-ApplicationServices==12.2.1
+pyobjc-framework-Cocoa==12.2.1
+pyobjc-framework-CoreBluetooth==12.2.1
+pyobjc-framework-CoreText==12.2.1
+pyobjc-framework-libdispatch==12.2.1
+pyobjc-framework-Quartz==12.2.1
+setuptools==83.0.0
+six==1.17.0
