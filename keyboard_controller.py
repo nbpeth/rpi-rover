@@ -1,26 +1,20 @@
-from pynput import keyboard
+from key_input import UP, DOWN, LEFT, RIGHT, listen as listen_for_keys
 
 DIAGONAL_UP_LEFT = "DIAGONAL_UP_LEFT"
 DIAGONAL_UP_RIGHT = "DIAGONAL_UP_RIGHT"
 DIAGONAL_DOWN_LEFT = "DIAGONAL_DOWN_LEFT"
 DIAGONAL_DOWN_RIGHT = "DIAGONAL_DOWN_RIGHT"
-UP = "UP"
-DOWN = "DOWN"
-LEFT = "LEFT"
-RIGHT = "RIGHT"
 
 DIRECTIONS = {
-    DIAGONAL_UP_LEFT: frozenset({keyboard.Key.up, keyboard.Key.left}),
-    DIAGONAL_UP_RIGHT: frozenset({keyboard.Key.up, keyboard.Key.right}),
-    DIAGONAL_DOWN_LEFT: frozenset({keyboard.Key.down, keyboard.Key.left}),
-    DIAGONAL_DOWN_RIGHT: frozenset({keyboard.Key.down, keyboard.Key.right}),
-    UP: frozenset({keyboard.Key.up}),
-    DOWN: frozenset({keyboard.Key.down}),
-    LEFT: frozenset({keyboard.Key.left}),
-    RIGHT: frozenset({keyboard.Key.right}),
+    DIAGONAL_UP_LEFT: frozenset({UP, LEFT}),
+    DIAGONAL_UP_RIGHT: frozenset({UP, RIGHT}),
+    DIAGONAL_DOWN_LEFT: frozenset({DOWN, LEFT}),
+    DIAGONAL_DOWN_RIGHT: frozenset({DOWN, RIGHT}),
+    UP: frozenset({UP}),
+    DOWN: frozenset({DOWN}),
+    LEFT: frozenset({LEFT}),
+    RIGHT: frozenset({RIGHT}),
 }
-
-QUIT_KEY = keyboard.Key.esc
 
 FULL_SPEED = 1
 CURVE_SPEED = 0.5
@@ -67,9 +61,12 @@ class KeyboardController:
 
     def on_release(self, key):
         self.pressed_keys.discard(key)
-        if key == QUIT_KEY:
-            return False
+        if not self.pressed_keys:
+            print("key: STOP")
+            self.robot.stop()
 
     def listen(self):
-        with keyboard.Listener(on_press=self.on_press, on_release=self.on_release) as listener:
-            listener.join()
+        try:
+            listen_for_keys(self.on_press, self.on_release)
+        finally:
+            self.robot.stop()

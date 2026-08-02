@@ -11,4 +11,4 @@ class RobotFactory:
         else:
             LEFT_WHEEL_PINS = {"forward": 20, "backward": 21, "enable": 12}
             RIGHT_WHEEL_PINS = {"forward": 6, "backward": 5, "enable": 13}
-            Robot(left=Motor(**LEFT_WHEEL_PINS), right=Motor(**RIGHT_WHEEL_PINS))
+            return Robot(left=Motor(**LEFT_WHEEL_PINS), right=Motor(**RIGHT_WHEEL_PINS))
